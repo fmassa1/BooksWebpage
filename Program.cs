@@ -12,6 +12,13 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+builder.Services.AddScoped<IBookService, BookService>();
+
+builder.Services.AddControllers();
+
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
@@ -35,6 +42,8 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+app.MapControllers();
 app.MapRazorPages()
    .WithStaticAssets();
 
