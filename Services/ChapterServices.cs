@@ -18,8 +18,9 @@ public class ChapterService : IChapterService
 
     public Chapter? GetByNumber(int bookId, int num)
         => _db.Chapters
-          .SingleOrDefault(c => c.BookId == bookId && c.Number == num)
-          .AsNoTracking();
+          .AsNoTracking()
+          .SingleOrDefault(c => c.BookId == bookId && c.Number == num);
+          
 
     public Chapter Add(Chapter chapter)
     {
