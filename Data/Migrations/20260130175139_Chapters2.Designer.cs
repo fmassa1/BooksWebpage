@@ -3,6 +3,7 @@ using System;
 using BooksWebpage.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BooksWebpage.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260130175139_Chapters2")]
+    partial class Chapters2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.2");
@@ -61,39 +64,6 @@ namespace BooksWebpage.Data.Migrations
                     b.HasIndex("BookId");
 
                     b.ToTable("Chapters");
-                });
-
-            modelBuilder.Entity("Comment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("ChapterId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("ChapterId");
-
-                    b.HasIndex("ParentId");
-
-                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -294,36 +264,11 @@ namespace BooksWebpage.Data.Migrations
 
             modelBuilder.Entity("Chapter", b =>
                 {
-                    b.HasOne("Book", "Book")
+                    b.HasOne("Book", null)
                         .WithMany("Chapters")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Book");
-                });
-
-            modelBuilder.Entity("Comment", b =>
-                {
-                    b.HasOne("Book", "Book")
-                        .WithMany("Comments")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Chapter", "Chapter")
-                        .WithMany("Comments")
-                        .HasForeignKey("ChapterId");
-
-                    b.HasOne("Comment", "Parent")
-                        .WithMany("Replys")
-                        .HasForeignKey("ParentId");
-
-                    b.Navigation("Book");
-
-                    b.Navigation("Chapter");
-
-                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -380,18 +325,6 @@ namespace BooksWebpage.Data.Migrations
             modelBuilder.Entity("Book", b =>
                 {
                     b.Navigation("Chapters");
-
-                    b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("Chapter", b =>
-                {
-                    b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("Comment", b =>
-                {
-                    b.Navigation("Replys");
                 });
 #pragma warning restore 612, 618
         }

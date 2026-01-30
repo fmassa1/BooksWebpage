@@ -9,6 +9,6 @@ public class Book
 
     //TODO: chapters, discussion, ratings
     public ICollection<Chapter> Chapters { get; set; } = new List<Chapter>();
-    // public ICollection<Discussion> Discussions { get; set; } = new List<Discussion>();
+    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
 }
