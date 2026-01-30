@@ -19,6 +19,7 @@ public class Comment
     public Chapter? Chapter { get; set; }
     public int? ChapterId { get; set; }
 
+    [JsonIgnore]
     public ICollection<Comment> Replys { get; set; } = new List<Comment>();
 
 }
