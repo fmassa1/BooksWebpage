@@ -261,13 +261,11 @@ namespace BooksWebpage.Data.Migrations
 
             modelBuilder.Entity("Chapter", b =>
                 {
-                    b.HasOne("Book", "Book")
+                    b.HasOne("Book", null)
                         .WithMany("Chapters")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Book");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

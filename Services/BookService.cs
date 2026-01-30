@@ -13,8 +13,15 @@ public class BookService : IBookService
     public IEnumerable<Book> GetAll()
         => _db.Books.AsNoTracking().ToList();
 
-    public Book? GetById(int id)
-        => _db.Books.Find(id);
+    public Book? GetById(int id, bool includeChapters = false)
+    {
+        IQueryable<Book> query = _db.Books;
+
+        if(includeChapters)
+            query = query.Include(b => b.Chapters);
+
+        return query.AsNoTracking().SingleOrDefault(b => b.Id == id);
+    }
 
     public Book Add(Book book)
     {
