@@ -16,8 +16,9 @@ public class BookService : IBookService
     public Book? GetById(int id)
     => _db.Books
       .Include(b => b.Chapters)
-          .ThenInclude(c => c.Comments)
-      .Include(b => b.Comments.Where(c => c.ChapterId == null))
+          .ThenInclude(c => c.Comments.Where(comment => comment.ParentId == null))
+      .Include(b => b.Comments.Where(c => c.ChapterId == null && c.ParentId == null))
+        .ThenInclude(comment => comment.Replys!) 
       .AsNoTracking()
       .SingleOrDefault(b => b.Id == id);
 

@@ -12,21 +12,24 @@ public class ChapterService : IChapterService
 
     public IEnumerable<Chapter> GetAllForBook(int bookId)
         => _db.Chapters
-          .Include(c => c.Comments) 
+          .Include(c => c.Comments!.Where(comment => comment.ParentId == null))
+            .ThenInclude(comment => comment.Replys!) 
           .Where(c => c.BookId == bookId)
           .AsNoTracking()
           .ToList();
 
     public Chapter? GetByNumber(int bookId, int num)
         => _db.Chapters
-          .Include(c => c.Comments) 
+          .Include(c => c.Comments!.Where(comment => comment.ParentId == null))
+            .ThenInclude(comment => comment.Replys!) 
           .AsNoTracking()
           .SingleOrDefault(c => c.BookId == bookId && c.Id == num);
 
 
     public Chapter? GetById(int id)
         => _db.Chapters
-          .Include(c => c.Comments) 
+          .Include(c => c.Comments!.Where(comment => comment.ParentId == null))
+            .ThenInclude(comment => comment.Replys!) 
           .AsNoTracking()
           .SingleOrDefault(c => c.Id == id);
           
