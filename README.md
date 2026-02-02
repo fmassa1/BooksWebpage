@@ -60,4 +60,5 @@ Expect missing endpoints and breaking changes.
 
 ## Author
 
-Rick Massa
+Fredric Massa
+
