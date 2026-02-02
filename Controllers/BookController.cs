@@ -18,7 +18,7 @@ public class BooksController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult Get(int id)
     {
-        var book = _books.GetById(id, includeChapters: true);
+        var book = _books.GetById(id);
         return book is null ? NotFound() : Ok(book);
     }
 

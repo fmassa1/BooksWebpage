@@ -10,9 +10,9 @@ public class Book
 
 
     //TODO: chapters, discussion, ratings
-    [JsonIgnore]
-    public ICollection<Chapter> Chapters { get; set; } = new List<Chapter>();
-    [JsonIgnore]
-    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+    //[JsonIgnore]
+    public ICollection<Chapter>? Chapters { get; set; }
+    //[JsonIgnore]
+    public ICollection<Comment>? Comments { get; set; }
 
 }
