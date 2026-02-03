@@ -10,15 +10,15 @@ public class CommentService : ICommentService
         _db = db;
     }
 
-    public IEnumerable<Comment> GetBookComments(int bookId)
-        => _db.Comments
-          .Where(c => c.BookId == bookId && c.ChapterId == null)
-          .AsNoTracking()
-          .ToList();
-
      public IEnumerable<Comment> GetAllForChapter(int chapterId)
         => _db.Comments
           .Where(c => c.ChapterId == chapterId)
+          .AsNoTracking()
+          .ToList();
+
+    public IEnumerable<Comment> GetReplies(int id)
+        => _db.Comments
+          .Where(c => c.ParentId == id)
           .AsNoTracking()
           .ToList();
 

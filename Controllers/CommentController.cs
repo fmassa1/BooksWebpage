@@ -11,17 +11,17 @@ public class CommentController : ControllerBase
         _comments = comments;
     }
 
-    [HttpGet("{bookId}")]
-    public IActionResult Get(int bookId)
-    {
-        var comments = _comments.GetBookComments(bookId);
-        return comments is null ? NotFound() : Ok(comments);
-    }
-
     [HttpGet("{bookId}/{chapterId}")]
     public IActionResult Get(int bookId, int chapterId)
     {
         var comments = _comments.GetAllForChapter(chapterId);
+        return comments is null ? NotFound() : Ok(comments);
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult Get(int id)
+    {
+        var comments = _comments.GetReplies(id);
         return comments is null ? NotFound() : Ok(comments);
     }
 
