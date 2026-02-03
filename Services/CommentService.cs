@@ -28,4 +28,15 @@ public class CommentService : ICommentService
         _db.SaveChanges();
         return comment;
     }
+
+    public bool Remove(int id)
+    {
+        var comment = _db.Comments.Find(id);
+        if (comment == null)
+            return false;
+
+        comment.IsDeleted = true;
+        _db.SaveChanges();
+        return true;
+    }
 }

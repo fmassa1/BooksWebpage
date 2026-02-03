@@ -9,6 +9,8 @@ public class Comment
     public int? ChapterId { get; set; }
     public int? ParentId { get; set; }
 
+    public bool IsDeleted { get; set; } = false;
+
     [JsonIgnore]
     public Comment? Parent { get; set; }
 
@@ -19,5 +21,6 @@ public class Comment
     public Chapter? Chapter { get; set; }
 
     public ICollection<Comment>? Replys { get; set; }
+
 
 }

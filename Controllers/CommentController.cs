@@ -28,4 +28,14 @@ public class CommentController : ControllerBase
     [HttpPost]
     public IActionResult Create(Comment comment)
         => Ok(_comments.Add(comment));
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        var result = _comments.Remove(id);
+    
+        if (!result)
+            return NotFound();
+        return NoContent();
+    }
 }
