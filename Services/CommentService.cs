@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using BooksWebpage.Data;
+using BooksWebpage.Utils;
 
 public class CommentService : ICommentService
 {
@@ -17,10 +18,20 @@ public class CommentService : ICommentService
           .ToList();
 
     public IEnumerable<Comment> GetReplies(int id)
-        => _db.Comments
+    {
+        var comments = _db.Comments
           .Where(c => c.ParentId == id)
           .AsNoTracking()
           .ToList();
+
+        if(comments == null)
+            return comments;
+        
+        CommentHelpers.ReplaceDeletedCommentText(comments);
+
+        return comments;
+
+    }
 
     public Comment Add(Comment comment)
     {
