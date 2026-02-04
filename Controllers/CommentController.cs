@@ -14,16 +14,20 @@ public class CommentController : ControllerBase
     [HttpGet("{bookId}/{chapterId}")]
     public IActionResult Get(int bookId, int chapterId)
     {
-        var comments = _comments.GetAllForChapter(chapterId);
+        var comments = _comments.GetCommentsForChapter(chapterId);
         return comments is null ? NotFound() : Ok(comments);
     }
 
     [HttpGet("{id}")]
-    public IActionResult Get(int id)
+    public IActionResult GetCommentReplies(int id)
     {
         var comments = _comments.GetReplies(id);
         return comments is null ? NotFound() : Ok(comments);
     }
+
+    [HttpPatch("spoiler/{id}")]
+    public IActionResult SetSpoiler(int id)
+        => Ok(_comments.SetSpoiler(id));
 
     [HttpPost]
     public IActionResult Create(Comment comment)
@@ -38,4 +42,5 @@ public class CommentController : ControllerBase
             return NotFound();
         return NoContent();
     }
+
 }

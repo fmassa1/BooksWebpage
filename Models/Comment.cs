@@ -11,6 +11,14 @@ public class Comment
 
     public bool IsDeleted { get; set; } = false;
 
+
+    //implement later when users implemented
+    public int UpVotes { get; set; } = 0;
+    public int DownVotes { get; set; } = 0;
+
+    public bool IsSpoiler { get; set; } = false;
+    public int SpoilerVote { get; set; } = 0;
+
     [JsonIgnore]
     public Comment? Parent { get; set; }
 

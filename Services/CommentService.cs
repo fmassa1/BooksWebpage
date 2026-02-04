@@ -11,7 +11,7 @@ public class CommentService : ICommentService
         _db = db;
     }
 
-     public IEnumerable<Comment> GetAllForChapter(int chapterId)
+     public IEnumerable<Comment> GetCommentsForChapter(int chapterId)
         => _db.Comments
           .Where(c => c.ChapterId == chapterId)
           .AsNoTracking()
@@ -31,6 +31,17 @@ public class CommentService : ICommentService
 
         return comments;
 
+    }
+
+    public Comment SetSpoiler(int id)
+    {
+        var comment = _db.Comments.Find(id);
+        if (comment == null)
+            return comment;
+
+        comment.IsSpoiler = !comment.IsSpoiler;
+        _db.SaveChanges();
+        return comment;
     }
 
     public Comment Add(Comment comment)
