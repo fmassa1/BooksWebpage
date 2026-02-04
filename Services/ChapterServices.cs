@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using BooksWebpage.Data;
+using BooksWebpage.Utils;
 
 public class ChapterService : IChapterService
 {
@@ -19,19 +20,33 @@ public class ChapterService : IChapterService
           .ToList();
 
     public Chapter? GetByNumber(int bookId, int num)
-        => _db.Chapters
+    {
+        var chapter = _db.Chapters
           .Include(c => c.Comments!.Where(comment => comment.ParentId == null))
             .ThenInclude(comment => comment.Replys!) 
           .AsNoTracking()
           .SingleOrDefault(c => c.BookId == bookId && c.Id == num);
 
+        if(chapter != null) {
+            CommentHelpers.ReplaceDeletedCommentText(chapter.Comments);
+        }
+        return chapter;
+    }
+
 
     public Chapter? GetById(int id)
-        => _db.Chapters
+    {
+        var chapter = _db.Chapters
           .Include(c => c.Comments!.Where(comment => comment.ParentId == null))
             .ThenInclude(comment => comment.Replys!) 
           .AsNoTracking()
           .SingleOrDefault(c => c.Id == id);
+
+        if(chapter != null) {
+            CommentHelpers.ReplaceDeletedCommentText(chapter.Comments);
+        }
+        return chapter;
+    }
           
 
     public Chapter Add(Chapter chapter)

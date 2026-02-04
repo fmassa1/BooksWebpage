@@ -11,11 +11,18 @@ public class ChapterController : ControllerBase
         _chapters = chapters;
     }
 
-    [HttpGet("{bookId}")]
-    public IActionResult Get(int bookId)
+    // [HttpGet("{bookId}")]
+    // public IActionResult Get(int bookId)
+    // {
+    //     var chapters = _chapters.GetAllForBook(bookId);
+    //     return chapters is null ? NotFound() : Ok(chapters);
+    // }
+
+    [HttpGet("{id}")]
+    public IActionResult Get(int id)
     {
-        var chapters = _chapters.GetAllForBook(bookId);
-        return chapters is null ? NotFound() : Ok(chapters);
+        var chapter = _chapters.GetById(id);
+        return chapter is null ? NotFound() : Ok(chapter);
     }
 
     [HttpGet("{bookId}/{chapterNum}")]
